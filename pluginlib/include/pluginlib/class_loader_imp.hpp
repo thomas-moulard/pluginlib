@@ -67,6 +67,7 @@ namespace
 {
 std::vector<std::string> catkinFindLib()
 {
+  ROS_DEBUG_NAMED("pluginlib.ClassLoader", "this function is actually called");
   std::vector<std::string> lib_paths;
   const char * env = std::getenv("CMAKE_PREFIX_PATH");
   if (env) {
