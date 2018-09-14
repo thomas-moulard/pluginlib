@@ -605,8 +605,8 @@ void ClassLoader<T>::loadLibraryForClass(const std::string & lookup_name)
 {
   ClassMapIterator it = classes_available_.find(lookup_name);
   if (it == classes_available_.end()) {
-    ROS_DEBUG_NAMED("pluginlib.ClassLoader", "Class %s has no mapping in classes_available_.",
-      lookup_name.c_str());
+    ROS_DEBUG_NAMED("pluginlib.ClassLoader", "Cannot load library for class %s: %s",
+      lookup_name.c_str(), getErrorStringForUnknownClass(lookup_name).c_str());
     throw pluginlib::LibraryLoadException(getErrorStringForUnknownClass(lookup_name));
   }
 
@@ -794,6 +794,8 @@ int ClassLoader<T>::unloadLibraryForClass(const std::string & lookup_name)
       library_path.c_str(), lookup_name.c_str());
     return unloadClassLibraryInternal(library_path);
   } else {
+    ROS_DEBUG_NAMED("pluginlib.ClassLoader", "Cannot unload library for class %s: %s",
+      lookup_name.c_str(), getErrorStringForUnknownClass(lookup_name).c_str());
     throw pluginlib::LibraryUnloadException(getErrorStringForUnknownClass(lookup_name));
   }
 }
